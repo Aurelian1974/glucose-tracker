@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router';
+import { createHashRouter, RouterProvider, Navigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import AppShell from '@/components/layout/AppShell';
 import Dashboard from '@/pages/Dashboard';
@@ -8,7 +8,7 @@ import Charts from '@/pages/Charts';
 import Settings from '@/pages/Settings';
 import { initializeDB } from '@/db/db';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     element: <AppShell />,
     children: [

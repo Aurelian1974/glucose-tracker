@@ -4,8 +4,10 @@ import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import path from 'path'
 
+const BASE = process.env.BASE_URL ?? '/';
+
 export default defineConfig({
-  base: process.env.BASE_URL ?? '/',
+  base: BASE,
   plugins: [
     tailwindcss(),
     react(),
@@ -20,8 +22,8 @@ export default defineConfig({
         background_color: '#0D1117',
         display: 'standalone',
         orientation: 'portrait',
-        start_url: '/',
-        scope: '/',
+        start_url: BASE,
+        scope: BASE,
         categories: ['health', 'medical'],
         icons: [
           { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },

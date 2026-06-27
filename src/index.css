@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@theme {
+  /* Custom fonts */
+  --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* App color palette — precision instrument dark theme */
+  --color-gt-bg: #0D1117;
+  --color-gt-surface: #161B22;
+  --color-gt-elevated: #1C2128;
+  --color-gt-border: #30363D;
+  --color-gt-border-strong: #484F58;
+  --color-gt-text: #E6EDF3;
+  --color-gt-secondary: #8B949E;
+  --color-gt-muted: #484F58;
+  --color-gt-accent: #2DD4BF;
+  --color-gt-high: #F59E0B;
+  --color-gt-very-high: #EF4444;
+  --color-gt-low: #60A5FA;
+}
+
+/* Base */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #0D1117;
+  color: #E6EDF3;
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root { min-height: 100dvh; }
+
+/* Hide number input spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] { -moz-appearance: textfield; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #0D1117; }
+::-webkit-scrollbar-thumb { background: #30363D; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #484F58; }
+
+/* Chart print labels — hidden on screen, revealed by @media print below */
+.chart-print-label { display: none; }
+
+/* Print */
+@media print {
+  /* Flip all custom-property colors to a clean report palette */
+  :root {
+    --color-gt-bg:           #ffffff;
+    --color-gt-surface:      #ffffff;
+    --color-gt-elevated:     #f4f4f4;
+    --color-gt-border:       #cccccc;
+    --color-gt-border-strong:#999999;
+    --color-gt-text:         #111111;
+    --color-gt-secondary:    #444444;
+    --color-gt-muted:        #777777;
+    /* accent & status colors kept as-is — medically meaningful */
+  }
+
+  body {
+    font-size: 10pt;
+    color: #111 !important;
+    background: #fff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Table-specific print overrides */
+  table { border-collapse: collapse !important; }
+  th, td { border: 0.5pt solid #ccc !important; }
+  th { background: #f4f4f4 !important; }
+  thead { display: table-header-group; } /* repeat column headers on every page */
+  .print-only-row { display: table-row !important; } /* report title row inside thead */
+
+  /* Navigation, filter bar, delete buttons — hide UI chrome */
+  .no-print { display: none !important; }
+  /* Print-only elements — force visible */
+  .print-only { display: block !important; }
+
+  /* Remove scrollable wrapper clipping */
+  .overflow-x-auto { overflow: visible !important; }
+
+  .print-page-break { page-break-before: always; }
+  .recharts-responsive-container {
+    width: 680px !important;
+    height: 220px !important;
+  }
+  /* Compact charts (individual slot charts) */
+  .chart-compact .recharts-responsive-container,
+  .chart-compact .recharts-wrapper { height: 100px !important; }
+  /* Keep each chart card on a single page */
+  .chart-card { break-inside: avoid; page-break-inside: avoid; }
+  /* Value labels: show in print */
+  .chart-print-label { display: inline !important; }
+}
